@@ -2,11 +2,21 @@
 chcp 65001 > nul
 title Dev Swissknife Studio [Port 8016]
 echo ========================================================
-echo   DEV SWISSKNIFE // REGEX, JSON, SQL & CRYPTO STUDIO
+echo   DEV SWISSKNIFE STUDIO [PORT 8016]
 echo ========================================================
-echo [INFO] Проверка и установка зависимостей...
-python -m pip install -r requirements.txt --quiet
-echo [INFO] Запуск FastAPI веб-сервера на http://localhost:8016 ...
-start http://localhost:8016
-python -m uvicorn main:app --host 0.0.0.0 --port 8016
+
+if exist "C:\Python313\python.exe" (
+    set "PY=C:\Python313\python.exe"
+) else (
+    set "PY=python"
+)
+
+echo [INFO] Проверка и освобождение порта 8016...
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr ":8016" ^| findstr "LISTENING"') do taskkill /f /pid %%a >nul 2>&1
+
+echo [INFO] Запуск веб-сервера на http://localhost:8016 ...
+start "" cmd /c "timeout /t 2 /nobreak >nul && start http://localhost:8016"
+
+cd /d "%~dp0"
+"%PY%" -m uvicorn main:app --host 127.0.0.1 --port 8016
 pause
