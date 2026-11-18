@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEV SWISSKNIFE // REGEX, JSON, SQL & CRYPTO STUDIO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-badge">TOOLKIT-v3</div>
+      <span class="brand-title">DEV SWISSKNIFE STUDIO</span>
+      <span class="brand-sub font-mono">REGEX // JSON-YAML // SQL SANDBOX // CRYPTO</span>
+    </div>
+    <div class="metrics-bar">
+      <div class="metric-item">
+        <span class="label">SQL ENGINE</span>
+        <span class="value font-mono text-cyan">SQLITE MEMORY</span>
+      </div>
+      <div class="metric-item">
+        <span class="label">CRYPTO</span>
+        <span class="value">SHA-256 / JWT / B64</span>
+      </div>
+      <div class="metric-item">
+        <span class="label">PORT</span>
+        <span class="value font-mono">8016</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Workspace Tabs -->
+  <nav class="nav-tabs">
+    <button class="nav-tab active" data-tab="regex">1. REGEX LAB</button>
+    <button class="nav-tab" data-tab="jsonyaml">2. JSON & YAML STUDIO</button>
+    <button class="nav-tab" data-tab="crypto">3. CRYPTO & JWT</button>
+    <button class="nav-tab" data-tab="sql">4. SQLITE SANDBOX</button>
+  </nav>
+
+  <!-- Main Viewport Panes -->
+  <main class="workspace">
+    <!-- PANE 1: REGEX LAB -->
+    <section class="tool-pane active" id="paneRegex">
+      <div class="regex-controls-bar">
+        <div class="pattern-input-wrap">
+          <span class="regex-slash font-mono">/</span>
+          <input type="text" id="regexPattern" value="([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9\.-]+)\.([a-zA-Z\.]{2,6})" placeholder="Enter regex pattern..." class="cyber-input font-mono">
+          <span class="regex-slash font-mono">/</span>
+        </div>
+        <div class="flags-group font-mono">
+          <label><input type="checkbox" id="flagI" checked> i (ignore case)</label>
+          <label><input type="checkbox" id="flagM" checked> m (multiline)</label>
+          <label><input type="checkbox" id="flagS"> s (dot all)</label>
+        </div>
+        <button class="btn btn-cyan" id="btnTestRegex">EVALUATE REGEX</button>
+      </div>
+
+      <div class="regex-split-view">
+        <div class="editor-col">
+          <div class="col-header">TEST STRING CORPUS</div>
+          <textarea id="regexTestText" class="cyber-textarea font-mono" placeholder="Paste sample text here...">Contact support at admin@cyberforge.dev or security-team@sentinel.net.
+Secondary ping to alex.lead@sub.domain.org for emergency escalation.</textarea>
+        </div>
+        <div class="editor-col">
+          <div class="col-header">
+            <span>MATCHES & CAPTURE GROUPS</span>
+            <span class="font-mono text-cyan" id="regexMatchCount">2 matches found</span>
+          </div>
+          <div class="matches-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>FULL MATCH</th>
+                  <th>POS</th>
+                  <th>GROUPS</th>
+                </tr>
+              </thead>
+              <tbody id="regexMatchesBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANE 2: JSON & YAML STUDIO -->
+    <section class="tool-pane hidden" id="paneJsonyaml">
+      <div class="studio-toolbar">
+        <button class="btn btn-cyan" id="btnJsonToYaml">JSON → YAML</button>
+        <button class="btn btn-cyan" id="btnYamlToJson">YAML → JSON</button>
+        <button class="btn" id="btnPrettifyJson">PRETTIFY JSON</button>
+        <button class="btn" id="btnMinifyJson">MINIFY JSON</button>
+      </div>
+      <div class="split-code-view">
+        <div class="editor-col">
+          <div class="col-header">SOURCE INPUT</div>
+          <textarea id="convertInput" class="code-textarea font-mono" placeholder="Paste JSON or YAML here...">{
+  "server": "HP ProLiant DL360 Gen9",
+  "ram_gb": 64,
+  "storage": {
+    "type": "SAS SSD",
+    "raid": "RAID-10",
+    "capacity_tb": 3.84
+  },
+  "services": ["git-forge", "chess-engine", "api-studio"],
+  "active": true
+}</textarea>
+        </div>
+        <div class="editor-col">
+          <div class="col-header">CONVERTED / FORMATTED OUTPUT</div>
+          <textarea id="convertOutput" readonly class="code-textarea font-mono output-area"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANE 3: CRYPTO & JWT -->
+    <section class="tool-pane hidden" id="paneCrypto">
+      <div class="crypto-grid">
+        <!-- Hash & Base64 Section -->
+        <div class="crypto-card">
+          <div class="card-title">REAL-TIME HASH GENERATOR (MD5 / SHA-256)</div>
+          <input type="text" id="hashInputText" value="Zero-AI-Slop-Production-Standard-2026" class="cyber-input font-mono">
+          <div class="hash-results-list">
+            <div class="hash-row"><span class="h-label">MD5:</span><span class="h-val font-mono" id="valMd5">...</span></div>
+            <div class="hash-row"><span class="h-label">SHA-1:</span><span class="h-val font-mono" id="valSha1">...</span></div>
+            <div class="hash-row"><span class="h-label">SHA-256:</span><span class="h-val font-mono" id="valSha256">...</span></div>
+            <div class="hash-row"><span class="h-label">BASE64:</span><span class="h-val font-mono" id="valBase64">...</span></div>
+          </div>
+        </div>
+
+        <!-- JWT Inspector Section -->
+        <div class="crypto-card">
+          <div class="card-title">JWT TOKEN INSPECTOR & DECODER</div>
+          <input type="text" id="jwtInput" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJvcGVyYXRvci0wMSIsIm5hbWUiOiJBbGV4IExlYWQiLCJyb2xlIjoiU3lzQWRtaW4iLCJpYXQiOjE3MDcxNjgwMDB9.s1gNaTuRe" placeholder="Paste eyJ... JWT token" class="cyber-input font-mono">
+          <div class="jwt-decoded-view font-mono" id="jwtOutputView">
+            <!-- Populated via POST /api/crypto/jwt -->
+          </div>
+        </div>
+
+        <!-- Password Generator -->
+        <div class="crypto-card">
+          <div class="card-title">SECURE ENTROPY PASSWORD GENERATOR</div>
+          <div class="keygen-bar">
+            <input type="text" id="generatedPassword" readonly class="cyber-input font-mono text-cyan">
+            <button class="btn btn-cyan" id="btnGenPassword">GENERATE</button>
+          </div>
+          <div class="entropy-meter font-mono text-xs">
+            <span>Shannon Entropy: <strong id="entropyVal">128 bits (Excellent)</strong></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANE 4: SQLITE SANDBOX -->
+    <section class="tool-pane hidden" id="paneSql">
+      <div class="sql-top-bar">
+        <textarea id="sqlQueryInput" class="sql-textarea font-mono">SELECT m.id, m.name, m.port, m.status, m.uptime_pct, d.username as owner
+FROM microservices m
+JOIN developers d ON m.owner_id = d.id
+WHERE m.uptime_pct > 99.0
+ORDER BY m.uptime_pct DESC;</textarea>
+        <div class="sql-actions">
+          <button class="btn btn-cyan" id="btnRunSql">EXECUTE QUERY [CTRL+ENTER]</button>
+          <div class="sample-queries">
+            <span class="text-xs text-muted">PRESETS:</span>
+            <button class="chip-btn" data-sql="SELECT * FROM developers;">Developers</button>
+            <button class="chip-btn" data-sql="SELECT * FROM telemetry_events ORDER BY id DESC LIMIT 10;">Telemetry</button>
+            <button class="chip-btn" data-sql="SELECT level, COUNT(*) as count, AVG(latency_ms) as avg_latency FROM telemetry_events GROUP BY level;">Aggregates</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sql-results-area">
+        <div class="sql-meta-header">
+          <span class="meta-label">STATUS:</span>
+          <span class="font-mono text-cyan" id="sqlMetaStatus">Ready</span>
+          <span class="meta-label">ROWS:</span>
+          <span class="font-mono" id="sqlRowCount">0</span>
+          <span class="meta-label">EXECUTION TIME:</span>
+          <span class="font-mono text-cyan" id="sqlExecTime">0 ms</span>
+        </div>
+        <div class="sql-table-wrap">
+          <table class="data-table" id="sqlResultsTable">
+            <thead id="sqlTableHead"></thead>
+            <tbody id="sqlTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/swissknife.js"></script>
+</body>
+</html>
